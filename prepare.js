@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const isCI = require('is-ci');
+import isCI from 'is-ci';
+import husky from 'husky';
+
 if (!isCI) {
-  const husky = require('husky');
   husky.install();
   husky.set('.husky/pre-commit', 'npx lint-staged');
 }

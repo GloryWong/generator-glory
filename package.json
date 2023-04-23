@@ -1,20 +1,28 @@
 {
   "name": "generator-glory",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Glory project scaffold",
-  "main": "index.js",
+  "main": "generators/index.js",
   "scripts": {
-    "prepare": "node ./prepare.js",
+    "dev": "npm run clean && tsc -w & npm run watchTpl --silent",
+    "build": "npm run clean && tsc && npm run copyTpl",
+    "clean": "rimraf -rf ./generators",
+    "watchTpl": "onchange 'src/*/templates/**' --initial -- npm run copyTpl --silent",
+    "copyTpl": "copyfiles -u 1 'src/*/templates/**' generators",
     "lint": "eslint --ext \".js,.ts\" .",
-    "pretty": "prettier --check .",
-    "format": "npm run lint && npm run pretty",
-    "fix": "prettier --write --list-different . && npm run lint --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "fix": "npm run lint -- --fix",
+    "format": "prettier --write --ignore-path .gitignore .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "node ./prepare.js",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GloryWong/generator-glory.git"
   },
+  "files": [
+    "generators"
+  ],
   "keywords": [
     "yeoman-generator",
     "scaffold",
@@ -31,18 +39,34 @@
   },
   "homepage": "https://github.com/GloryWong/generator-glory#readme",
   "devDependencies": {
+    "@types/ejs": "^3.1.2",
+    "@types/is-ci": "^3.0.0",
+    "@types/lodash": "^4.14.194",
+    "@types/underscore.string": "^0.0.38",
+    "@types/yeoman-generator": "^5.2.11",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
-    "editorconfig": "^1.0.2",
-    "eslint": "^8.38.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^13.2.1",
+    "onchange": "^7.1.0",
     "prettier": "^2.8.7",
+    "rimraf": "^5.0.0",
     "type-fest": "^3.8.0",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@esm2cjs/normalize-url": "^8.0.0",
+    "ejs": "^3.1.9",
+    "email-validator": "^2.0.4",
+    "generator-license": "^5.5.0",
+    "lodash": "^4.17.21",
+    "underscore.string": "^3.3.6",
+    "yeoman-generator": "^5.8.0"
   }
 }

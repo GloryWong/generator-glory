@@ -3,13 +3,17 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "<%= module %>",
     "moduleResolution": "Node",
     "skipLibCheck": true,
     "strict": true,
     "allowJs": true,
-    // "noEmit": true,
-    "declaration": true,
+    <% if (noEmit) { %>
+      "noEmit": true,
+    <% } %>
+    <% if (declaration) { %>
+      "declaration": true,
+    <% } %>
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
@@ -17,13 +21,12 @@
       "dom"
     ],
     "baseUrl": ".",
-    "outDir": "generators"
+    "outDir": "<%= outDir %>"
   },
   "include": [
-    "src"
+    "<%= include %>"
   ],
   "exclude": [
-    "generators",
     "node_modules"
   ]
 }

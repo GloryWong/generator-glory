@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
+    "DigitalBrainstem.javascript-ejs-support"
   ],
   "unwantedRecommendations": [
     "ms-vscode.vscode-typescript-tslint-plugin"

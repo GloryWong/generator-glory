@@ -1,0 +1,27 @@
+{
+  "name": "<%= moduleName %>",
+  "version": "0.0.0",
+  "description": "<%= moduleDescription %>",
+  "license": "MIT",
+  "main": "index.js",
+  "author": {
+    "name": "<%= authorName %>",
+    "email": "<%= authorEmail %>",
+    "url": "<%= authorWebsite %>"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<%= githubUsername %>/<%= githubRepoName %>.git"
+  },
+  "bugs": {
+    "url": "https://github.com/<%= githubUsername %>/<%= githubRepoName %>/issues"
+  },
+  "homepage": "https://github.com/<%= githubUsername %>/<%= githubRepoName %>#readme",
+  "scripts": {
+    "dev": "npm run clean && tsc -w",
+    "build": "npm run clean && tsc",
+    "clean": "rimraf -rf ./generators",
+    "prepublish": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
