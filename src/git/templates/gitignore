@@ -134,3 +134,6 @@ dist
 
 # Local Netlify folder
 .netlify
+
+# Husky
+.husky/_

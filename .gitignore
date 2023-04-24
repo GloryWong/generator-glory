@@ -135,4 +135,7 @@ dist
 # Local Netlify folder
 .netlify
 
+# Husky
+.husky/_
+
 generators
