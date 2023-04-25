@@ -40,6 +40,7 @@
   "homepage": "https://github.com/GloryWong/generator-glory#readme",
   "devDependencies": {
     "@types/ejs": "^3.1.2",
+    "@types/empty-dir": "^2.0.1",
     "@types/is-ci": "^3.0.0",
     "@types/lodash": "^4.14.194",
     "@types/underscore.string": "^0.0.38",
@@ -62,8 +63,10 @@
   },
   "dependencies": {
     "@esm2cjs/normalize-url": "^8.0.0",
+    "add-dependencies": "^1.1.0",
     "ejs": "^3.1.9",
     "email-validator": "^2.0.4",
+    "empty-dir": "^3.0.0",
     "generator-license": "^5.5.0",
     "lodash": "^4.17.21",
     "underscore.string": "^3.3.6",

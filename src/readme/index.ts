@@ -59,9 +59,11 @@ export default class extends BaseGenerator {
     super(params[0], params[1], { useYesOption: true });
   }
 
-  async prompting() {
-    this.log(this.options.haha, this.options.god, this.options.no);
+  initializing() {
+    Object.assign(this.value, this.options);
+  }
 
+  async prompting() {
     if (!this.options.yes) {
       const answers = await this.prompt([
         {

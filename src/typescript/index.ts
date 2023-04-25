@@ -18,13 +18,17 @@ export default class extends BaseGenerator {
   value: Value = {
     module: 'CommonJS',
     noEmit: false,
-    declaration: false,
+    declaration: true,
     outDir: 'dist',
     include: 'src',
   };
 
   constructor(...params: ConstructorParameters<typeof Generator>) {
     super(params[0], params[1], { useYesOption: true });
+  }
+
+  initializing() {
+    Object.assign(this.value, this.options);
   }
 
   async prompting() {

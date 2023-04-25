@@ -1,31 +1,41 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
-import os from 'os';
+import { EOL } from 'os';
 import { appendPrettier2ESLint, appendTypeScript2ESLint } from '../_utils';
 
+interface Value {
+  ignores: string;
+}
+
 export default class extends BaseGenerator {
-  ignores = '';
+  value: Value = {
+    ignores: '',
+  };
 
   constructor(...params: ConstructorParameters<typeof Generator>) {
     super(params[0], params[1], { useYesOption: true });
   }
 
+  initializing() {
+    Object.assign(this.value, this.options);
+  }
+
   async promting() {
     if (!this.options.yes) {
       this.log(
-        `Default eslintignore:${os.EOL}%s`,
+        `Default eslintignore:${EOL}%s`,
         this.readTemplate('eslintignore'),
       );
       const answers = await this.prompt([
         {
           name: 'ignores',
           message:
-            'Append ignored files and directoris (separated with space) (optional):',
-          default: this.ignores,
+            'Append ignored files and directoris (divided with space) (optional):',
+          default: this.value.ignores,
         },
       ]);
 
-      this.ignores = answers.ignores?.trim() ?? '';
+      this.value.ignores = answers.ignores?.trim() ?? '';
     }
   }
 
@@ -36,10 +46,10 @@ export default class extends BaseGenerator {
   }
 
   writting() {
-    if (this.ignores) {
+    if (this.value.ignores) {
       this.appendDestination(
         '.eslintignore',
-        this.ignores.replace(/\s+/g, os.EOL),
+        this.value.ignores.replace(/\s+/g, EOL),
       );
     }
 

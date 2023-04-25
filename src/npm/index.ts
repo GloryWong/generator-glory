@@ -3,16 +3,9 @@ import * as underscoreString from 'underscore.string';
 import * as Generator from 'yeoman-generator';
 import * as EmailValidator from 'email-validator';
 import { BaseGenerator } from '../_base';
+import { getDefaultGithubRepoName, isScoped } from '../_utils';
 
 const { slugify } = underscoreString;
-
-function isScoped(moduleName: string) {
-  return /^@.+\/.+$/.test(moduleName);
-}
-
-function getDefaultGithubRepoName(moduleName: string) {
-  return isScoped(moduleName) ? moduleName.split('/')[1] : moduleName;
-}
 
 interface Value {
   moduleName: string;
@@ -37,6 +30,10 @@ export default class extends BaseGenerator {
 
   constructor(...params: ConstructorParameters<typeof Generator>) {
     super(params[0], params[1], { useYesOption: true });
+  }
+
+  initializing() {
+    Object.assign(this.value, this.options);
   }
 
   async prompting() {

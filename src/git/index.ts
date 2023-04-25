@@ -1,13 +1,24 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
-import os from 'os';
+import { EOL } from 'os';
+
+interface Value {
+  initialBranch: string;
+  ignores: string;
+}
 
 export default class extends BaseGenerator {
-  initialBranch = 'master';
-  ignores = '';
+  value: Value = {
+    initialBranch: 'master',
+    ignores: '',
+  };
 
   constructor(...params: ConstructorParameters<typeof Generator>) {
-    super(...params);
+    super(params[0], params[1], { useYesOption: true });
+  }
+
+  initializing() {
+    Object.assign(this.value, this.options);
   }
 
   async prompting() {
@@ -16,18 +27,18 @@ export default class extends BaseGenerator {
         {
           name: 'initialBranch',
           message: 'Initial branch',
-          default: this.initialBranch,
+          default: this.value.initialBranch,
         },
         {
           name: 'ignores',
           message:
-            'Append ignored files and directoris (separated with space) (optional):',
-          default: this.ignores,
+            'Append ignored files and directoris (divided with space) (optional):',
+          default: this.value.ignores,
         },
       ]);
 
-      this.initialBranch = answers.initialBranch;
-      this.ignores = answers.ignores?.trim() ?? '';
+      this.value.initialBranch = answers.initialBranch;
+      this.value.ignores = answers.ignores?.trim() ?? '';
     }
   }
 
@@ -37,14 +48,14 @@ export default class extends BaseGenerator {
   }
 
   writing() {
-    if (this.ignores) {
+    if (this.value.ignores) {
       this.appendDestination(
         '.gitignore',
-        this.ignores.replace(/\s+/g, os.EOL),
+        this.value.ignores.replace(/\s+/g, EOL),
       );
     }
 
     // Git init
-    this.spawnCommand('git', ['init', '-b', this.initialBranch]);
+    this.spawnCommand('git', ['init', '-b', this.value.initialBranch]);
   }
 }

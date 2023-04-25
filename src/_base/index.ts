@@ -2,6 +2,8 @@ import * as Generator from 'yeoman-generator';
 import { JsonObject, JsonValue, Primitive } from 'type-fest';
 import { mergeWith, uniq, PropertyPath, pull, get } from 'lodash';
 import * as ejs from 'ejs';
+import * as path from 'path';
+import * as fs from 'fs';
 
 type GCP = ConstructorParameters<typeof Generator>;
 
@@ -39,6 +41,12 @@ export abstract class BaseGenerator extends Generator {
         description: 'Use default',
       });
     }
+
+    this.option('dry', {
+      type: Boolean,
+      default: false,
+      description: 'Add dependencies without installing',
+    });
   }
 
   createPackageJsonIfNecessary() {
@@ -65,9 +73,39 @@ export abstract class BaseGenerator extends Generator {
     packageSpecs.forEach((v) => deps.add(v));
   }
 
-  async installPackages() {
-    const install = async (packageSpecs: Set<string>, dev = false) => {
-      await this.spawnCommand('npm', [
+  installPackages() {
+    if (this.options.dry) {
+      const addDeps = (packageSpecs: Set<string>, dev = false) => {
+        if (packageSpecs.size === 0) return;
+
+        this.spawnCommandSync(
+          'npx',
+          [
+            'add-dependencies',
+            this.destinationPath('package.json'),
+            ...packageSpecs,
+            dev ? '--dev' : '',
+            '--no-overwrite',
+          ],
+          {
+            cwd: path.resolve(__dirname, '../../'),
+          },
+        );
+      };
+
+      if (!fs.existsSync(this.destinationPath('package.json'))) {
+        fs.writeFileSync(this.destinationPath('package.json'), '{}');
+      }
+      addDeps(this.packages.deps);
+      addDeps(this.packages.devDeps, true);
+
+      return;
+    }
+
+    const install = (packageSpecs: Set<string>, dev = false) => {
+      if (packageSpecs.size === 0) return;
+
+      this.spawnCommandSync('npm', [
         'install',
         '--silent',
         dev ? '--save-dev' : '--save',
@@ -80,9 +118,8 @@ export abstract class BaseGenerator extends Generator {
       );
     };
 
-    if (this.packages.deps.size > 0) await install(this.packages.deps);
-    if (this.packages.devDeps.size > 0)
-      await install(this.packages.devDeps, true);
+    install(this.packages.deps);
+    install(this.packages.devDeps, true);
   }
 
   appendDestination(filePath: string, content: string) {
