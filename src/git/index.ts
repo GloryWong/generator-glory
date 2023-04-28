@@ -56,6 +56,11 @@ export default class extends BaseGenerator {
     }
 
     // Git init
-    this.spawnCommand('git', ['init', '-b', this.value.initialBranch]);
+    this.spawnCommand('git', [
+      'init',
+      '--quiet',
+      '-b',
+      this.value.initialBranch,
+    ]);
   }
 }

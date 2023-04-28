@@ -8,7 +8,11 @@ export default class extends BaseGenerator {
     });
   }
 
-  initializing() {
+  configuring() {
+    this.renderTemplateJSON('lintstagedrc', '.lintstagedrc');
+  }
+
+  compose() {
     if (!this.existsDestination('.gitignore')) {
       this.composeWith(require.resolve('../git'), { yes: this.options.yes });
     }
@@ -22,10 +26,6 @@ export default class extends BaseGenerator {
         yes: this.options.yes,
       });
     }
-  }
-
-  configuring() {
-    this.renderTemplateJSON('lintstagedrc', '.lintstagedrc');
   }
 
   async writing() {

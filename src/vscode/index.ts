@@ -31,7 +31,7 @@ export default class extends BaseGenerator {
     this.renderTemplateJSON('settings.json', '.vscode/settings.json');
   }
 
-  setupFormatters() {
+  compose() {
     this.formatters.forEach((v) => {
       this.composeWith(require.resolve(`../${v}`), { yes: true });
     });

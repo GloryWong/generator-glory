@@ -27,7 +27,7 @@ export default class extends BaseGenerator {
     Object.assign(this.value, this.options);
   }
 
-  init() {
+  compose() {
     this.composeWith(require.resolve('generator-license'), this.value);
   }
 }

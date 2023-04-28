@@ -22,6 +22,7 @@ interface MergeDestinationJSONOptions {
 }
 
 const spinner = new Spinner();
+spinner.setSpinnerString(19).setSpinnerTitle('Adding dependencies... ');
 
 export abstract class BaseGenerator extends Generator {
   constructor(args: Args, options: Options, features?: Features) {
@@ -85,7 +86,7 @@ export abstract class BaseGenerator extends Generator {
       return;
     }
 
-    spinner.start().setSpinnerTitle(`Add dependencies...`);
+    spinner.start();
     if (typeof _dependencies === 'string' || Array.isArray(_dependencies)) {
       const versions = await getLatestVersions(_dependencies);
       await addDeps(versions);
