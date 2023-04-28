@@ -14,7 +14,7 @@ export default class extends BaseGenerator {
   };
 
   constructor(...params: ConstructorParameters<typeof Generator>) {
-    super(params[0], params[1], { useYesOption: true });
+    super(...params);
   }
 
   initializing() {

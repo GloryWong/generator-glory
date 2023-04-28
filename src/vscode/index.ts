@@ -5,7 +5,9 @@ export default class extends BaseGenerator {
   private formatters = ['eslint', 'prettier'];
 
   constructor(...params: ConstructorParameters<typeof Generator>) {
-    super(params[0], params[1], { useYesOption: true });
+    super(params[0], params[1], {
+      useYesOption: true,
+    });
   }
 
   async prompting() {
