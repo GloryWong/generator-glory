@@ -1,6 +1,6 @@
 import { BaseGenerator } from '../_base';
 
-export function appendTypeScript2ESLint(generator: BaseGenerator) {
+export async function appendTypeScript2ESLint(generator: BaseGenerator) {
   generator.mergeDestinationJSON(
     '.eslintrc',
     {
@@ -22,8 +22,8 @@ export function appendTypeScript2ESLint(generator: BaseGenerator) {
       },
     },
   );
-  generator.addPackages(
-    ['@typescript-eslint/eslint-plugin', '@typescript-eslint/parser'],
-    true,
-  );
+  await generator.addPackages([
+    '@typescript-eslint/eslint-plugin',
+    '@typescript-eslint/parser',
+  ]);
 }

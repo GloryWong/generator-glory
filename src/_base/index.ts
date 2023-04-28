@@ -2,8 +2,7 @@ import * as Generator from 'yeoman-generator';
 import { JsonObject, JsonValue, Primitive } from 'type-fest';
 import { mergeWith, uniq, PropertyPath, pull, get } from 'lodash';
 import * as ejs from 'ejs';
-import * as path from 'path';
-import * as fs from 'fs';
+import { getLatestVersions } from '../_utils';
 
 type GCP = ConstructorParameters<typeof Generator>;
 
@@ -22,16 +21,8 @@ interface MergeDestinationJSONOptions {
 }
 
 export abstract class BaseGenerator extends Generator {
-  private readonly packages: { deps: Set<string>; devDeps: Set<string> } = {
-    deps: new Set(),
-    devDeps: new Set(),
-  };
-
   constructor(args: Args, options: Options, features?: Features) {
-    super(args, options, {
-      ...features,
-      customInstallTask: true,
-    });
+    super(args, options, features);
 
     if (features?.useYesOption) {
       this.option('yes', {
@@ -40,19 +31,6 @@ export abstract class BaseGenerator extends Generator {
         default: false,
         description: 'Use default',
       });
-    }
-
-    this.option('dry', {
-      type: Boolean,
-      default: false,
-      description: 'Add dependencies without installing',
-    });
-  }
-
-  createPackageJsonIfNecessary() {
-    if (!this.existsDestination('package.json')) {
-      this.spawnCommandSync('npm', ['init', '--yes']);
-      this.log('Created package.json');
     }
   }
 
@@ -64,62 +42,20 @@ export abstract class BaseGenerator extends Generator {
     this.log(`Added scripts: ${names}`);
   }
 
-  addPackages(packageSpecs: string | string[], dev = false) {
-    if (typeof packageSpecs === 'string') {
-      packageSpecs = [packageSpecs];
+  async addPackages(
+    dependencies: string | string[] | Record<string, string>,
+    dev = true,
+  ) {
+    const addDeps = dev
+      ? this.addDevDependencies.bind(this)
+      : this.addDependencies.bind(this);
+
+    if (typeof dependencies === 'string' || Array.isArray(dependencies)) {
+      const versions = await getLatestVersions(dependencies);
+      return addDeps(versions);
+    } else {
+      return addDeps(dependencies);
     }
-
-    const deps = dev ? this.packages.devDeps : this.packages.deps;
-    packageSpecs.forEach((v) => deps.add(v));
-  }
-
-  installPackages() {
-    if (this.options.dry) {
-      const addDeps = (packageSpecs: Set<string>, dev = false) => {
-        if (packageSpecs.size === 0) return;
-
-        this.spawnCommandSync(
-          'npx',
-          [
-            'add-dependencies',
-            this.destinationPath('package.json'),
-            ...packageSpecs,
-            dev ? '--dev' : '',
-            '--no-overwrite',
-          ],
-          {
-            cwd: path.resolve(__dirname, '../../'),
-          },
-        );
-      };
-
-      if (!fs.existsSync(this.destinationPath('package.json'))) {
-        fs.writeFileSync(this.destinationPath('package.json'), '{}');
-      }
-      addDeps(this.packages.deps);
-      addDeps(this.packages.devDeps, true);
-
-      return;
-    }
-
-    const install = (packageSpecs: Set<string>, dev = false) => {
-      if (packageSpecs.size === 0) return;
-
-      this.spawnCommandSync('npm', [
-        'install',
-        '--silent',
-        dev ? '--save-dev' : '--save',
-        ...packageSpecs,
-      ]);
-      this.log(
-        'Installed %sependencies: %s',
-        dev ? 'devD' : 'd',
-        Array.from(packageSpecs).join(', '),
-      );
-    };
-
-    install(this.packages.deps);
-    install(this.packages.devDeps, true);
   }
 
   appendDestination(filePath: string, content: string) {

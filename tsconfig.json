@@ -4,7 +4,7 @@
     "jsx": "preserve",
     "target": "ESNext",
     "module": "CommonJS",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "strict": true,
     "allowJs": true,
@@ -12,6 +12,9 @@
     "declaration": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "types": [
+      "node"
+    ],
     "lib": [
       "esnext",
       "dom"
@@ -21,9 +24,5 @@
   },
   "include": [
     "src"
-  ],
-  "exclude": [
-    "generators",
-    "node_modules"
   ]
 }

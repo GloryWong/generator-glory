@@ -9,21 +9,17 @@ export default class extends BaseGenerator {
 
   configuring() {
     this.copyTemplate('prettierrc', '.prettierrc');
-    this.addPackages('prettier', true);
   }
 
-  writting() {
+  async writting() {
     this.addScripts({
       format: 'prettier --write --ignore-path .gitignore .',
     });
+    await this.addPackages('prettier');
 
     // append prettier rules to eslint
     if (this.existsDestination('.eslintrc')) {
-      appendPrettier2ESLint(this);
+      await appendPrettier2ESLint(this);
     }
-  }
-
-  install() {
-    this.installPackages();
   }
 }

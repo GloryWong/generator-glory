@@ -117,10 +117,16 @@ export default class extends BaseGenerator {
     }
   }
 
-  compose() {
-    this.composeWith(require.resolve('../npm'), {
+  _composeWith(generatorName: string, options: Record<string, any> = {}) {
+    this.composeWith(require.resolve(`../${generatorName}`), {
       yes: true,
-      dry: true,
+      ...options,
+    });
+    return this;
+  }
+
+  compose() {
+    this._composeWith('npm', {
       moduleName: this.value.appName,
       moduleDescription: this.value.appDescription,
       authorName: this.value.authorName,
@@ -128,53 +134,30 @@ export default class extends BaseGenerator {
       authorWebsite: this.value.authorWebsite,
       githubUsername: this.value.githubUsername,
       githubRepoName: this.value.githubRepoName,
-    });
-    this.composeWith(require.resolve('../git'), {
-      yes: true,
-      dry: true,
-    });
-    this.composeWith(require.resolve('../typescript'), {
-      yes: true,
-      dry: true,
-    });
-    this.composeWith(require.resolve('../eslint'), {
-      yes: true,
-      dry: true,
-    });
-    this.composeWith(require.resolve('../prettier'), {
-      yes: true,
-      dry: true,
-    });
-    this.composeWith(require.resolve('../editorconfig'), {
-      yes: true,
-      dry: true,
-    });
-    this.composeWith(require.resolve('../license'), {
-      yes: true,
-      dry: true,
-      name: this.value.authorName,
-      email: this.value.authorEmail,
-      website: this.value.authorWebsite,
-      license: 'MIT',
-    });
-    this.composeWith(require.resolve('../readme'), {
-      yes: true,
-      dry: true,
-      projectName: this.value.appName,
-      projectDescription: this.value.appDescription,
-      licenseName: 'MIT',
-      authorName: this.value.authorName,
-      authorWebsite: this.value.authorWebsite,
-      authorGithubUsername: this.value.githubUsername,
-    });
-    this.composeWith(require.resolve('../lintstaged'), {
-      yes: true,
-      dry: true,
-    });
-    this.composeWith(require.resolve('../vscode'), {
-      yes: true,
-      dry: true,
-    });
+    })
+      ._composeWith('git')
+      ._composeWith('typescript')
+      ._composeWith('eslint')
+      ._composeWith('prettier')
+      ._composeWith('editorconfig')
+      ._composeWith('license', {
+        yes: true,
+        name: this.value.authorName,
+        email: this.value.authorEmail,
+        website: this.value.authorWebsite,
+        license: 'MIT',
+      })
+      ._composeWith('readme', {
+        yes: true,
+        projectName: this.value.appName,
+        projectDescription: this.value.appDescription,
+        licenseName: 'MIT',
+        authorName: this.value.authorName,
+        authorWebsite: this.value.authorWebsite,
+        authorGithubUsername: this.value.githubUsername,
+      })
+      ._composeWith('lintstaged')
+      ._composeWith('vscode');
   }
 
   end() {

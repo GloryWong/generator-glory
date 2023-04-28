@@ -23,9 +23,11 @@
     "baseUrl": ".",
     "outDir": "<%= outDir %>"
   },
-  "include": [
-    "<%= include %>"
-  ],
+  <% if (include) { %>
+    "include": [
+      "<%= include %>"
+    ],
+  <% } %>
   "exclude": [
     "node_modules"
   ]

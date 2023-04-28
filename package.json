@@ -68,6 +68,7 @@
     "email-validator": "^2.0.4",
     "empty-dir": "^3.0.0",
     "generator-license": "^5.5.0",
+    "get-latest-version": "^5.0.1",
     "lodash": "^4.17.21",
     "underscore.string": "^3.3.6",
     "yeoman-generator": "^5.8.0"

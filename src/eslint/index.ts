@@ -42,10 +42,9 @@ export default class extends BaseGenerator {
   configuring() {
     this.copyTemplate('eslintrc', '.eslintrc');
     this.copyTemplate('eslintignore', '.eslintignore');
-    this.addPackages(['eslint', 'eslint-plugin-unused-imports'], true);
   }
 
-  writting() {
+  async writting() {
     if (this.value.ignores) {
       this.appendDestination(
         '.eslintignore',
@@ -58,16 +57,14 @@ export default class extends BaseGenerator {
       fix: 'npm run lint -- --fix',
     });
 
+    await this.addPackages(['eslint', 'eslint-plugin-unused-imports']);
+
     if (this.existsDestination('tsconfig.json')) {
-      appendTypeScript2ESLint(this);
+      await appendTypeScript2ESLint(this);
     }
 
     if (this.existsDestination('.prettierrc')) {
-      appendPrettier2ESLint(this);
+      await appendPrettier2ESLint(this);
     }
-  }
-
-  install() {
-    this.installPackages();
   }
 }

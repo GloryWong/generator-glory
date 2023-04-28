@@ -1,6 +1,6 @@
 import { BaseGenerator } from '../_base';
 
-export function appendPrettier2ESLint(generator: BaseGenerator) {
+export async function appendPrettier2ESLint(generator: BaseGenerator) {
   generator.mergeDestinationJSON(
     '.eslintrc',
     {
@@ -14,8 +14,9 @@ export function appendPrettier2ESLint(generator: BaseGenerator) {
       },
     },
   );
-  generator.addPackages(
-    ['eslint-config-prettier', 'eslint-plugin-prettier'],
-    true,
-  );
+
+  await generator.addPackages([
+    'eslint-config-prettier',
+    'eslint-plugin-prettier',
+  ]);
 }

@@ -23,29 +23,23 @@ export default class extends BaseGenerator {
   }
 
   configuring() {
-    this.addPackages(['lint-staged', 'husky'], true);
+    this.renderTemplateJSON('lintstagedrc', '.lintstagedrc');
   }
 
-  writing() {
-    this.renderTemplateJSON('lintstagedrc', '.lintstagedrc');
+  async writing() {
     this.addScripts({
       prepare: 'husky install',
     });
-  }
-
-  insall() {
-    this.installPackages();
+    await this.addPackages(['lint-staged', 'husky']);
   }
 
   end() {
-    if (!this.options.dry) {
-      this.spawnCommandSync('npm', ['run', 'prepare']);
-      this.spawnCommandSync('npx', [
-        'husky',
-        'set',
-        '.husky/pre-commit',
-        '"npx lint-staged"',
-      ]);
-    }
+    this.spawnCommandSync('npm', ['run', 'prepare']);
+    this.spawnCommandSync('npx', [
+      'husky',
+      'set',
+      '.husky/pre-commit',
+      '"npx lint-staged"',
+    ]);
   }
 }

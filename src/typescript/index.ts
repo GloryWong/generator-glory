@@ -2,6 +2,7 @@ import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
 import { TupleToUnion } from 'type-fest';
 import { appendTypeScript2ESLint } from '../_utils';
+import * as emptyDir from 'empty-dir';
 
 const _module = ['CommonJS', 'ESNext'] as const;
 type Module = TupleToUnion<typeof _module>;
@@ -69,22 +70,27 @@ export default class extends BaseGenerator {
     }
   }
 
-  configuring() {
-    this.renderTemplateJSON('_tsconfig.json', 'tsconfig.json', this.value);
-    this.addPackages(['typescript', 'type-fest'], true);
+  async configuring() {
+    if (
+      !this.existsDestination(this.value.include) ||
+      (await emptyDir(this.destinationPath(this.value.include)))
+    ) {
+      this.renderTemplate('index', `${this.value.include}/index.ts`);
+    }
+    this.renderTemplateJSON('tsconfig.ejs', 'tsconfig.json', this.value);
+  }
+
+  async writing() {
+    await this.addPackages(['typescript', 'type-fest']);
 
     // eslint
     if (this.existsDestination('.eslintrc')) {
-      appendTypeScript2ESLint(this);
+      await appendTypeScript2ESLint(this);
     }
 
     // package.json
     this.mergeDestinationJSON('package.json', {
       main: 'dist/index.js',
     });
-  }
-
-  install() {
-    this.installPackages();
   }
 }
