@@ -13,8 +13,8 @@
     "fix": "npm run lint -- --fix",
     "format": "prettier --write --ignore-path .gitignore .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "node ./prepare.js",
-    "prepublish": "npm run build"
+    "prepare": "husky install",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -54,7 +54,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
-    "lint-staged": "^13.2.1",
+    "lint-staged": "^13.2.2",
     "onchange": "^7.1.0",
     "prettier": "^2.8.7",
     "rimraf": "^5.0.0",

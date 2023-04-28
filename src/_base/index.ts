@@ -35,11 +35,9 @@ export abstract class BaseGenerator extends Generator {
   }
 
   addScripts(scripts: Record<string, string>) {
-    const names = Object.keys(scripts).join(', ');
     this.packageJson.merge({
       scripts,
     });
-    this.log(`Added scripts: ${names}`);
   }
 
   async addPackages(
