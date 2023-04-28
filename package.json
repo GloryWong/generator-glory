@@ -41,7 +41,6 @@
   "devDependencies": {
     "@types/ejs": "^3.1.2",
     "@types/empty-dir": "^2.0.1",
-    "@types/is-ci": "^3.0.0",
     "@types/lodash": "^4.14.194",
     "@types/underscore.string": "^0.0.38",
     "@types/yeoman-generator": "^5.2.11",
@@ -53,7 +52,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
-    "is-ci": "^3.0.1",
     "lint-staged": "^13.2.2",
     "onchange": "^7.1.0",
     "prettier": "^2.8.7",
@@ -63,7 +61,6 @@
   },
   "dependencies": {
     "@esm2cjs/normalize-url": "^8.0.0",
-    "add-dependencies": "^1.1.0",
     "ejs": "^3.1.9",
     "email-validator": "^2.0.4",
     "empty-dir": "^3.0.0",
