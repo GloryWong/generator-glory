@@ -42,6 +42,10 @@ export abstract class BaseGenerator extends Generator {
     this.log('=== start', generatorName, '===');
   }
 
+  getLatestVersions(...args: Parameters<typeof getLatestVersions>) {
+    return getLatestVersions(...args);
+  }
+
   addScripts(scripts: Record<string, string>) {
     this.packageJson.merge({
       scripts,
@@ -88,7 +92,7 @@ export abstract class BaseGenerator extends Generator {
 
     spinner.start();
     if (typeof _dependencies === 'string' || Array.isArray(_dependencies)) {
-      const versions = await getLatestVersions(_dependencies);
+      const versions = await this.getLatestVersions(_dependencies);
       await addDeps(versions);
     } else {
       await addDeps(_dependencies);

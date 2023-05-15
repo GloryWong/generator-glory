@@ -12,7 +12,8 @@
     "lint": "eslint --ext \".js,.ts\" .",
     "fix": "npm run lint -- --fix",
     "format": "prettier --write --ignore-path .gitignore .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:utils": "ts-mocha -p tsconfig.test.json tests/utils.spec.ts",
+    "test": "ts-mocha -p tsconfig.test.json tests/*.spec.ts",
     "prepare": "husky install",
     "prepublishOnly": "npm run build"
   },
@@ -43,7 +44,10 @@
     "@types/ejs": "^3.1.2",
     "@types/empty-dir": "^2.0.1",
     "@types/lodash": "^4.14.194",
+    "@types/mocha": "^10.0.1",
+    "@types/sinon": "^10.0.14",
     "@types/underscore.string": "^0.0.38",
+    "@types/yeoman-assert": "^3.1.1",
     "@types/yeoman-generator": "^5.2.11",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
@@ -54,11 +58,16 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
+    "mocha": "^10.2.0",
     "onchange": "^7.1.0",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.0",
+    "sinon": "^15.0.4",
+    "ts-mocha": "^10.0.0",
     "type-fest": "^3.9.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^7.4.0"
   },
   "dependencies": {
     "@esm2cjs/normalize-url": "^8.0.0",

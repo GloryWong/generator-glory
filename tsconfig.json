@@ -8,21 +8,20 @@
     "skipLibCheck": true,
     "strict": true,
     "allowJs": true,
-    // "noEmit": true,
-    "declaration": true,
+    // "declaration": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "types": [
-      "node"
+      "node",
+      "mocha"
     ],
     "lib": [
       "esnext",
-      "dom"
     ],
     "baseUrl": ".",
     "outDir": "generators"
   },
   "include": [
     "src"
-  ]
+  ],
 }
