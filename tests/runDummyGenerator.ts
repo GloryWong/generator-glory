@@ -9,7 +9,7 @@ export function runDummyGenerator(
   let _generator: BaseGenerator;
   import('yeoman-test').then((helpers) =>
     helpers.default
-      .run(path.join(__dirname, `dummy`))
+      .run(path.join(__dirname, 'dummy'))
       .withOptions({
         skipInstall: true,
       })

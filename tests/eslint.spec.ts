@@ -1,5 +1,6 @@
 import * as assert from 'yeoman-assert';
 import { runGenerator } from './runGenerator';
+import { assertAppendTypeScript2ESLint } from './assertions';
 
 describe('glory:eslint', () => {
   describe('General', () => {
@@ -18,12 +19,16 @@ describe('glory:eslint', () => {
     });
   });
 
-  // describe('TypeScript is used', () => {
-  //   before((done) => {
-  //     runGenerator(done, 'eslint');
-  //   });
-  //   assertAppendTypeScript2ESLint();
-  // });
+  describe('TypeScript is used', () => {
+    before((done) => {
+      runGenerator(done, 'typescript', {
+        options: { yes: true },
+        nextGenerator: ['eslint'],
+      });
+    });
+
+    assertAppendTypeScript2ESLint();
+  });
 
   // describe('Prettier is used', () => {
   //   before((done) =>
