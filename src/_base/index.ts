@@ -33,7 +33,7 @@ export abstract class BaseGenerator extends Generator {
         type: Boolean,
         alias: 'y',
         default: false,
-        description: 'Use default',
+        description: 'Skip prompts and use default values',
       });
     }
   }

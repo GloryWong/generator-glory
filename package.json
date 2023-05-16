@@ -45,6 +45,7 @@
     "@types/empty-dir": "^2.0.1",
     "@types/lodash": "^4.14.194",
     "@types/mocha": "^10.0.1",
+    "@types/node": "^20.1.5",
     "@types/sinon": "^10.0.14",
     "@types/underscore.string": "^0.0.38",
     "@types/yeoman-assert": "^3.1.1",

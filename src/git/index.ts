@@ -1,44 +1,42 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
-import { EOL } from 'os';
+import { isGitManaged } from '../_utils';
 
 interface Value {
   initialBranch: string;
-  ignores: string;
 }
 
 export default class extends BaseGenerator {
   value: Value = {
     initialBranch: 'master',
-    ignores: '',
   };
 
+  gitManaged = false;
+
   constructor(...params: ConstructorParameters<typeof Generator>) {
-    super(...params);
+    super(params[0], params[1], { useYesOption: true });
   }
 
-  initializing() {
+  async initializing() {
     Object.assign(this.value, this.options);
+    this.gitManaged = await isGitManaged(this.destinationRoot());
+
+    if (this.gitManaged) {
+      this.log('!Current directory is already managed by git');
+    }
   }
 
   async prompting() {
-    if (!this.options.yes) {
+    if (!this.options.yes && !this.gitManaged) {
       const answers = await this.prompt([
         {
           name: 'initialBranch',
           message: 'Initial branch',
           default: this.value.initialBranch,
         },
-        {
-          name: 'ignores',
-          message:
-            'Append ignored files and directoris (divided with space) (optional):',
-          default: this.value.ignores,
-        },
       ]);
 
       this.value.initialBranch = answers.initialBranch;
-      this.value.ignores = answers.ignores?.trim() ?? '';
     }
   }
 
@@ -48,19 +46,14 @@ export default class extends BaseGenerator {
   }
 
   writing() {
-    if (this.value.ignores) {
-      this.appendDestination(
-        '.gitignore',
-        this.value.ignores.replace(/\s+/g, EOL),
-      );
-    }
-
     // Git init
-    this.spawnCommand('git', [
-      'init',
-      '--quiet',
-      '-b',
-      this.value.initialBranch,
-    ]);
+    if (!this.gitManaged) {
+      this.spawnCommandSync('git', [
+        'init',
+        '--quiet',
+        '-b',
+        this.value.initialBranch,
+      ]);
+    }
   }
 }
