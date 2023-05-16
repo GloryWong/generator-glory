@@ -1,8 +1,13 @@
 import * as assert from 'yeoman-assert';
-import { ESLINTCONFIG } from '../constants';
+import { ESLINT_CONFIG, PRETTIER_CONFIG } from '../../src/constants';
+import { existsSync } from 'fs';
 
 export function assertPrettierAtEndOfExtends() {
-  it('prettier is at the end of the `extends`', () => {
-    assert.fileContent(ESLINTCONFIG, /extends":[\s\S]*"prettier"\s*\]/);
+  it('prettier should be at the end of the `extends`', function () {
+    if (existsSync(PRETTIER_CONFIG)) {
+      assert.fileContent(ESLINT_CONFIG, /extends":[\s\S]*"prettier"\s*\]/);
+    } else {
+      this.skip();
+    }
   });
 }

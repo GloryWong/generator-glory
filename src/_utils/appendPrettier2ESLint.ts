@@ -1,8 +1,9 @@
+import { ESLINT_CONFIG } from '../constants';
 import { BaseGenerator } from '../_base';
 
 export async function appendPrettier2ESLint(generator: BaseGenerator) {
   generator.mergeDestinationJSON(
-    '.eslintrc',
+    ESLINT_CONFIG,
     {
       plugins: ['prettier'],
       extends: ['prettier'],

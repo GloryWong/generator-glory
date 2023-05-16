@@ -1,6 +1,7 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
 import { appendPrettier2ESLint } from '../_utils';
+import { ESLINT_CONFIG, PRETTIER_CONFIG } from '../constants';
 
 export default class extends BaseGenerator {
   constructor(...params: ConstructorParameters<typeof Generator>) {
@@ -8,7 +9,7 @@ export default class extends BaseGenerator {
   }
 
   configuring() {
-    this.copyTemplate('prettierrc', '.prettierrc');
+    this.copyTemplate('prettierrc', PRETTIER_CONFIG);
   }
 
   async writting() {
@@ -18,7 +19,7 @@ export default class extends BaseGenerator {
     await this.addPackages('prettier');
 
     // append prettier rules to eslint
-    if (this.existsDestination('.eslintrc')) {
+    if (this.existsDestination(ESLINT_CONFIG)) {
       await appendPrettier2ESLint(this);
     }
   }

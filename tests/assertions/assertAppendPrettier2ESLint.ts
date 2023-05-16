@@ -1,12 +1,12 @@
 import * as assert from 'yeoman-assert';
-import { ESLINTCONFIG, PACKAGEJSON } from '../constants';
+import { ESLINT_CONFIG, PACKAGE_JSON } from '../../src/constants';
 import { assertPrettierAtEndOfExtends } from './assertPrettierAtEndOfExtends';
 
 export function assertAppendPrettier2ESLint() {
   it('add required values to .eslintrc file', () => {
     assert.fileContent([
-      [ESLINTCONFIG, /plugins":[\s\S]*"prettier"/],
-      [ESLINTCONFIG, /extends":[\s\S]*"prettier"/],
+      [ESLINT_CONFIG, /plugins":[\s\S]*"prettier"/],
+      [ESLINT_CONFIG, /extends":[\s\S]*"prettier"/],
     ]);
   });
 
@@ -14,8 +14,8 @@ export function assertAppendPrettier2ESLint() {
 
   it('add required dependencies', () => {
     assert.fileContent([
-      [PACKAGEJSON, /eslint-config-prettier/],
-      [PACKAGEJSON, /eslint-plugin-prettier/],
+      [PACKAGE_JSON, /eslint-config-prettier/],
+      [PACKAGE_JSON, /eslint-plugin-prettier/],
     ]);
   });
 }

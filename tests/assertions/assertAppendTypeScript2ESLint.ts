@@ -1,18 +1,18 @@
 import * as assert from 'yeoman-assert';
-import { ESLINTCONFIG, PACKAGEJSON } from '../constants';
+import { ESLINT_CONFIG, PACKAGE_JSON } from '../../src/constants';
 import { assertPrettierAtEndOfExtends } from './assertPrettierAtEndOfExtends';
 
 export function assertAppendTypeScript2ESLint() {
   it('add required values to .eslintrc file', () => {
     assert.fileContent([
-      [ESLINTCONFIG, /parser":[\s\S]*"@typescript-eslint\/parser"/],
-      [ESLINTCONFIG, /plugins":[\s\S]*"@typescript-eslint"/],
+      [ESLINT_CONFIG, /parser":[\s\S]*"@typescript-eslint\/parser"/],
+      [ESLINT_CONFIG, /plugins":[\s\S]*"@typescript-eslint"/],
       [
-        ESLINTCONFIG,
+        ESLINT_CONFIG,
         /extends":[\s\S]*"plugin:@typescript-eslint\/eslint-recommended"/,
       ],
       [
-        ESLINTCONFIG,
+        ESLINT_CONFIG,
         /extends":[\s\S]*"plugin:@typescript-eslint\/recommended"/,
       ],
     ]);
@@ -22,8 +22,8 @@ export function assertAppendTypeScript2ESLint() {
 
   it('add required dependencies', () => {
     assert.fileContent([
-      [PACKAGEJSON, /@typescript-eslint\/eslint-plugin/],
-      [PACKAGEJSON, /@typescript-eslint\/parser/],
+      [PACKAGE_JSON, /@typescript-eslint\/eslint-plugin/],
+      [PACKAGE_JSON, /@typescript-eslint\/parser/],
     ]);
   });
 }

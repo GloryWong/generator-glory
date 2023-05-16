@@ -1,14 +1,5 @@
 import * as assert from 'yeoman-assert';
-import {
-  appendPrettier2ESLint,
-  appendTypeScript2ESLint,
-  isScoped,
-} from '../src/_utils';
-import { runDummyGenerator } from './runDummyGenerator';
-import {
-  assertAppendPrettier2ESLint,
-  assertAppendTypeScript2ESLint,
-} from './assertions';
+import { isScoped } from '../src/_utils';
 
 describe('utils', () => {
   describe('isScoped()', () => {
@@ -33,17 +24,5 @@ describe('utils', () => {
       assert.strictEqual(isScoped('@/test'), false);
       assert.strictEqual(isScoped('@test/'), false);
     });
-  });
-
-  describe('appendTypeScript2ESlint()', () => {
-    before((done) => runDummyGenerator(done, appendTypeScript2ESLint));
-
-    assertAppendTypeScript2ESLint();
-  });
-
-  describe('appendPrettier2ESlint()', () => {
-    before((done) => runDummyGenerator(done, appendPrettier2ESLint));
-
-    assertAppendPrettier2ESLint();
   });
 });

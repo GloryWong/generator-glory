@@ -130,7 +130,9 @@ export abstract class BaseGenerator extends Generator {
     if (primitiveKeepLast) {
       const { arrayPath, primitive } = primitiveKeepLast;
       const arr = get(mergedDestinationJSON, arrayPath);
-      pull(arr, primitive).push(primitive);
+      if (Array.isArray(arr) && arr.includes(primitive)) {
+        pull(arr, primitive).push(primitive);
+      }
     }
 
     this.writeDestinationJSON(filePath, mergedDestinationJSON);

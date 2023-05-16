@@ -3,6 +3,7 @@ import { BaseGenerator } from '../_base';
 import { TupleToUnion } from 'type-fest';
 import { appendTypeScript2ESLint } from '../_utils';
 import * as emptyDir from 'empty-dir';
+import { TYPESCRIPT_CONFIG, ESLINT_CONFIG, PACKAGE_JSON } from '../constants';
 
 const _module = ['CommonJS', 'ESNext'] as const;
 type Module = TupleToUnion<typeof _module>;
@@ -79,19 +80,19 @@ export default class extends BaseGenerator {
     ) {
       this.renderTemplate('index', `${this.value.include}/index.ts`);
     }
-    this.renderTemplateJSON('tsconfig.ejs', 'tsconfig.json', this.value);
+    this.renderTemplateJSON('tsconfig.ejs', TYPESCRIPT_CONFIG, this.value);
   }
 
   async writing() {
     await this.addPackages(['typescript', 'type-fest']);
 
     // eslint
-    if (this.existsDestination('.eslintrc')) {
+    if (this.existsDestination(ESLINT_CONFIG)) {
       await appendTypeScript2ESLint(this);
     }
 
     // package.json
-    this.mergeDestinationJSON('package.json', {
+    this.mergeDestinationJSON(PACKAGE_JSON, {
       main: 'dist/index.js',
     });
   }

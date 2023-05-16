@@ -4,6 +4,7 @@ import * as Generator from 'yeoman-generator';
 import * as EmailValidator from 'email-validator';
 import { BaseGenerator } from '../_base';
 import { getDefaultGithubRepoName, isScoped } from '../_utils';
+import { PACKAGE_JSON } from '../constants';
 
 const { slugify } = underscoreString;
 
@@ -104,6 +105,6 @@ export default class extends BaseGenerator {
   }
 
   configuring() {
-    this.renderTemplateJSON('_package.json', 'package.json', this.value);
+    this.renderTemplateJSON('_package.json', PACKAGE_JSON, this.value);
   }
 }

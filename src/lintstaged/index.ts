@@ -1,5 +1,6 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
+import { ESLINT_CONFIG, PRETTIER_CONFIG } from '../constants';
 
 export default class extends BaseGenerator {
   constructor(...params: ConstructorParameters<typeof Generator>) {
@@ -17,11 +18,11 @@ export default class extends BaseGenerator {
       this.composeWith(require.resolve('../git'), { yes: this.options.yes });
     }
 
-    if (!this.existsDestination('.eslintrc')) {
+    if (!this.existsDestination(ESLINT_CONFIG)) {
       this.composeWith(require.resolve('../eslint'), { yes: this.options.yes });
     }
 
-    if (!this.existsDestination('.prettierrc')) {
+    if (!this.existsDestination(PRETTIER_CONFIG)) {
       this.composeWith(require.resolve('../prettier'), {
         yes: this.options.yes,
       });

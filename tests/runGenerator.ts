@@ -25,12 +25,15 @@ export function runGenerator(
     cwd,
     nextGenerator,
   } = settings;
+
   let _cwd: string;
+
   import('yeoman-test').then((helpers) => {
-    helpers.default
+    const ctx = helpers.default
       .run(getGeneratorPath(generatorName), {
         forwardCwd: cwd ? true : undefined,
         cwd,
+        autoCleanup: false,
       })
       .withOptions({
         skipInstall: true,
@@ -38,19 +41,20 @@ export function runGenerator(
       })
       .withAnswers(answers)
       .withGenerators(withGeneratorNames.map((v) => getGeneratorPath(v)))
-      .onEnvironment((ctx) => {
-        _cwd = ctx.cwd;
-      })
-      .on('ready', mockGetLatestVersions)
-      .on('end', () => {
-        if (nextGenerator) {
-          runGenerator(done, nextGenerator[0], {
-            ...nextGenerator[1],
-            cwd: _cwd,
-          });
-        } else {
-          done();
-        }
+      .onEnvironment((env) => {
+        _cwd = env.cwd;
       });
+
+    ctx.on('ready', mockGetLatestVersions).on('end', () => {
+      if (nextGenerator) {
+        runGenerator(done, nextGenerator[0], {
+          ...nextGenerator[1],
+          cwd: _cwd,
+        });
+      } else {
+        process.chdir(_cwd);
+        done();
+      }
+    });
   });
 }
