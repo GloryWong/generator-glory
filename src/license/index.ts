@@ -20,11 +20,15 @@ export default class extends BaseGenerator {
   };
 
   constructor(...params: ConstructorParameters<typeof Generator>) {
-    super(...params);
+    super(params[0], params[1], { useYesOption: true });
   }
 
   initializing() {
     Object.assign(this.value, this.options);
+
+    if (this.options.yes) {
+      this.value.license = this.value.defaultLicense;
+    }
   }
 
   compose() {
