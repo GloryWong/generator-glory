@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { mockGetLatestVersions } from './mockGetLatestVersions';
 import Environment from 'yeoman-environment';
 
 function getGeneratorPath(name: string) {
@@ -43,12 +42,16 @@ export function runGenerator(
         ...options,
       })
       .withAnswers(answers)
-      .withGenerators(withGeneratorNames.map((v) => getGeneratorPath(v)))
+      .withGenerators(
+        withGeneratorNames.map((v) => [
+          helpers.default.createDummyGenerator(),
+          getGeneratorPath(v),
+        ]),
+      )
       .onEnvironment((env) => {
         _cwd = env.cwd;
         onEnvironment?.(env);
       })
-      .on('ready', mockGetLatestVersions)
       .on('end', () => {
         if (nextGenerator) {
           runGenerator(done, nextGenerator[0], {

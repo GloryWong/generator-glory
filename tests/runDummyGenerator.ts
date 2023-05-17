@@ -1,6 +1,5 @@
 import * as path from 'path';
 import { BaseGenerator } from '../src/_base';
-import { mockGetLatestVersions } from './mockGetLatestVersions';
 
 export function runDummyGenerator(
   done: Mocha.Done,
@@ -15,7 +14,6 @@ export function runDummyGenerator(
       })
       .on('ready', async (generator) => {
         _generator = generator;
-        mockGetLatestVersions(generator);
         await onReady(_generator);
       })
       .on('end', () => {

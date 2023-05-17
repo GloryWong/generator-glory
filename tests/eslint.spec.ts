@@ -1,29 +1,38 @@
-import * as assert from 'yeoman-assert';
 import { runGenerator } from './runGenerator';
 import {
-  assertAppendPrettier2ESLint,
-  assertAppendTypeScript2ESLint,
+  assertESLintBasic,
+  assertESLintPrettier,
+  assertESLintTypeScript,
+  assertPrettierBasic,
 } from './assertions';
-import { ESLINT_CONFIG, PACKAGE_JSON } from '../src/constants';
 
 describe('glory:eslint', () => {
-  describe('General', () => {
-    before((done) => runGenerator(done, 'eslint'));
-    it('create expected files', () => {
-      assert.file([ESLINT_CONFIG, '.eslintignore']);
-    });
+  describe('Use default values', () => {
+    before((done) =>
+      runGenerator(done, 'eslint', {
+        options: {
+          yes: true,
+        },
+      }),
+    );
 
-    it('add expected npm scripts', () => {
-      assert.fileContent(PACKAGE_JSON, '"lint"');
-      assert.fileContent(PACKAGE_JSON, '"fix"');
-    });
-
-    it('add required dependencies', () => {
-      assert.fileContent(PACKAGE_JSON, /"eslint":\s*".+"/);
-    });
+    assertESLintBasic();
   });
 
-  describe('TypeScript is used', () => {
+  describe('Integrate prettier', () => {
+    before((done) =>
+      runGenerator(done, 'eslint', {
+        answers: {
+          integratePrettier: true,
+        },
+        withGeneratorNames: ['prettier'],
+      }),
+    );
+
+    assertPrettierBasic();
+  });
+
+  describe('Update TypeScript part in ESLint config', () => {
     before((done) => {
       runGenerator(done, 'typescript', {
         options: { yes: true },
@@ -31,33 +40,38 @@ describe('glory:eslint', () => {
       });
     });
 
-    assertAppendTypeScript2ESLint();
+    assertESLintBasic();
+    assertESLintTypeScript();
   });
 
-  describe('Prettier is used', () => {
+  describe('Update Prettier part in ESLint config', () => {
     before((done) => {
       runGenerator(done, 'prettier', {
+        options: { yes: true },
         nextGenerator: ['eslint'],
       });
     });
 
-    assertAppendPrettier2ESLint();
+    assertESLintBasic();
+    assertESLintPrettier();
   });
 
-  describe('Both TypeScript and Prettier are used', () => {
+  describe('Update TypeScript and Prettier at the same time in ESLint config', () => {
     before((done) => {
       runGenerator(done, 'typescript', {
         options: { yes: true },
         nextGenerator: [
           'prettier',
           {
+            options: { yes: true },
             nextGenerator: ['eslint'],
           },
         ],
       });
     });
 
-    assertAppendTypeScript2ESLint();
-    assertAppendPrettier2ESLint();
+    assertESLintBasic();
+    assertESLintTypeScript();
+    assertESLintPrettier();
   });
 });

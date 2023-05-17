@@ -12,8 +12,7 @@
     "lint": "eslint --ext \".js,.ts\" .",
     "fix": "npm run lint -- --fix",
     "format": "prettier --write --ignore-path .gitignore .",
-    "test:utils": "ts-mocha -p tsconfig.test.json tests/utils.spec.ts",
-    "test": "ts-mocha -p tsconfig.test.json tests/*.spec.ts",
+    "test": "UNIT_TEST=true ts-mocha -p tsconfig.test.json tests/*.spec.ts",
     "prepare": "husky install",
     "prepublishOnly": "npm run build"
   },

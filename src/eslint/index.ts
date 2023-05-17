@@ -7,12 +7,39 @@ import {
   PRETTIER_CONFIG,
 } from '../constants';
 
+interface Value {
+  integratePrettier: boolean;
+}
+
 export default class extends BaseGenerator {
+  value: Value = {
+    integratePrettier: false,
+  };
+
   constructor(...params: ConstructorParameters<typeof Generator>) {
-    super(...params);
+    super(params[0], params[1], { useYesOption: true });
+  }
+
+  async prompting() {
+    if (!this.options.yes) {
+      const answers = await this.prompt([
+        {
+          type: 'confirm',
+          name: 'integratePrettier',
+          message: 'Do you want to setup prettier?',
+          default: this.value.integratePrettier,
+        },
+      ]);
+
+      this.value.integratePrettier = answers.integratePrettier;
+    }
   }
 
   configuring() {
+    if (this.value.integratePrettier) {
+      this.composeWith(require.resolve('../prettier'));
+    }
+
     this.copyTemplate('eslintrc', ESLINT_CONFIG);
     this.copyTemplate('eslintignore', '.eslintignore');
   }
