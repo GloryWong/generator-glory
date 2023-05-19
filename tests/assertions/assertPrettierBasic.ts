@@ -1,6 +1,7 @@
 import * as assert from 'yeoman-assert';
 import { PRETTIER_CONFIG } from '../../src/_constants';
 import { assertPkgScripts } from './assertPkgScripts';
+import { assertPkgDeps } from './assertPkgDeps';
 
 export function assertPrettierBasic() {
   describe('Prettier basic configuration', () => {
@@ -12,5 +13,7 @@ export function assertPrettierBasic() {
       path: 'pretty',
       value: /prettier/,
     });
+
+    assertPkgDeps('prettier');
   });
 }
