@@ -53,10 +53,17 @@ export function assertJsonFileContent(
 
   (Array.isArray(pathValues) ? pathValues : [pathValues]).map((pathValue) => {
     if (typeof pathValue === 'string') {
-      const path = completePath(pathValue);
+      let path = completePath(pathValue);
+      let expectExisting = true;
+      if (path.endsWith('!')) {
+        expectExisting = false;
+        path = path.substring(0, path.length - 1);
+      }
       assert(
-        has(file, path),
-        `Expected property ${path} to exist in ${fileName}.`,
+        expectExisting === has(file, path),
+        `Expected property ${path} to ${
+          expectExisting ? '' : 'not '
+        }exist in ${fileName}.`,
       );
     } else {
       const {

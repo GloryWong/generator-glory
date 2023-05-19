@@ -1,6 +1,6 @@
 import * as assert from 'yeoman-assert';
 import { PACKAGE_JSON } from '../src/_constants';
-import { assertJsonFileContent } from './assertions';
+import { assertJsonFileContent, assertNpmBasic } from './assertions';
 import { runGenerator } from './runGenerator';
 
 interface MockedAnswers {
@@ -85,16 +85,7 @@ describe('glory:npm', () => {
       });
     });
 
-    it('should create package.json file which has required properties', () => {
-      assertJsonFileContent(PACKAGE_JSON, [
-        'name',
-        'description',
-        'author',
-        'repository.url',
-        'bugs.url',
-        'homepage',
-      ]);
-    });
+    assertNpmBasic();
   });
 
   describe('Prompt to customize values', () => {

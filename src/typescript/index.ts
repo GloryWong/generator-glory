@@ -8,7 +8,7 @@ import { TYPESCRIPT_CONFIG, ESLINT_CONFIG, PACKAGE_JSON } from '../_constants';
 const _module = ['CommonJS', 'ESNext'] as const;
 type Module = TupleToUnion<typeof _module>;
 
-interface Value {
+export interface Value {
   module: Module;
   noEmit: boolean;
   declaration: boolean;
@@ -74,13 +74,14 @@ export default class extends BaseGenerator {
   }
 
   async configuring() {
+    this.renderTemplateJSON('tsconfig.ejs', TYPESCRIPT_CONFIG, this.value);
+
     if (
       !this.existsDestination(this.value.include) ||
       (await emptyDir(this.destinationPath(this.value.include)))
     ) {
       this.renderTemplate('index', `${this.value.include}/index.ts`);
     }
-    this.renderTemplateJSON('tsconfig.ejs', TYPESCRIPT_CONFIG, this.value);
   }
 
   async writing() {
@@ -93,7 +94,7 @@ export default class extends BaseGenerator {
 
     // package.json
     this.mergeDestinationJSON(PACKAGE_JSON, {
-      main: 'dist/index.js',
+      main: `${this.value.outDir}/index.js`,
     });
   }
 }

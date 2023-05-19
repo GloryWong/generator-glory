@@ -1,5 +1,6 @@
 import * as path from 'path';
 import Environment from 'yeoman-environment';
+import { BaseGenerator } from '../src/_base';
 
 function getGeneratorPath(name: string) {
   return path.join(__dirname, `../src/${name}`);
@@ -12,6 +13,7 @@ export interface RunGeneratorSettings {
   cwd?: string;
   nextGenerator?: [generatorName: string, settings?: RunGeneratorSettings];
   onEnvironment?: (env: Environment) => void;
+  onReady?: (generator: BaseGenerator) => void;
 }
 
 export function runGenerator(
@@ -26,6 +28,7 @@ export function runGenerator(
     cwd,
     nextGenerator,
     onEnvironment,
+    onReady,
   } = settings;
 
   let _cwd: string;
@@ -52,6 +55,7 @@ export function runGenerator(
         _cwd = env.cwd;
         onEnvironment?.(env);
       })
+      .on('ready', (g) => onReady?.(g))
       .on('end', () => {
         if (nextGenerator) {
           runGenerator(done, nextGenerator[0], {

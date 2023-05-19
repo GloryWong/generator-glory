@@ -8,3 +8,5 @@ export * from './assertESLintTypeScript';
 export * from './assertESLintPrettierPosition';
 export * from './assertPrettierBasic';
 export * from './assertGitBasic';
+export * from './assertNpmBasic';
+export * from './assertTypeScriptBasic';

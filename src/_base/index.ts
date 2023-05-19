@@ -1,6 +1,6 @@
 import * as Generator from 'yeoman-generator';
 import { JsonObject, JsonValue, Primitive } from 'type-fest';
-import { mergeWith, uniq, PropertyPath, pull, get } from 'lodash';
+import { mergeWith, uniq, PropertyPath, pull, get, has } from 'lodash';
 import * as ejs from 'ejs';
 import { getLatestVersions } from '../_utils';
 import { Spinner } from 'cli-spinner';
@@ -102,6 +102,11 @@ export abstract class BaseGenerator extends Generator {
 
   appendDestination(filePath: string, content: string) {
     this.fs.append(this.destinationPath(filePath), content);
+  }
+
+  existsDestinationProperty(filePath: string, propPath: PropertyPath) {
+    const content = this.readDestinationJSON(filePath);
+    return has(content, propPath);
   }
 
   mergeDestinationJSON(
