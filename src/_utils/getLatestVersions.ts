@@ -2,7 +2,7 @@ import * as _getLatestVersion from 'get-latest-version';
 
 function getLatestVersion(pkgName: string) {
   return process.env.UNIT_TEST === 'true'
-    ? '^0.0.0'
+    ? '0.0.0'
     : _getLatestVersion(pkgName, { auth: false });
 }
 

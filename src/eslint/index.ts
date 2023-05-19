@@ -5,7 +5,7 @@ import {
   ESLINT_CONFIG,
   TYPESCRIPT_CONFIG,
   PRETTIER_CONFIG,
-} from '../constants';
+} from '../_constants';
 
 interface Value {
   integratePrettier: boolean;
@@ -20,13 +20,17 @@ export default class extends BaseGenerator {
     super(params[0], params[1], { useYesOption: true });
   }
 
+  initializing() {
+    Object.assign(this.value, this.options);
+  }
+
   async prompting() {
     if (!this.options.yes) {
       const answers = await this.prompt([
         {
           type: 'confirm',
           name: 'integratePrettier',
-          message: 'Do you want to setup prettier?',
+          message: 'Do you want to install and integrate prettier?',
           default: this.value.integratePrettier,
         },
       ]);

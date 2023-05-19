@@ -1,4 +1,4 @@
-import { ESLINT_CONFIG } from '../constants';
+import { ESLINT_CONFIG } from '../_constants';
 import { BaseGenerator } from '../_base';
 
 export async function appendTypeScript2ESLint(generator: BaseGenerator) {

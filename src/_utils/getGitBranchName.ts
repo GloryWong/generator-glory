@@ -2,11 +2,11 @@
 
 import { spawnPromise } from './spawnPromise';
 
-export async function getGitBranchName(dir: string) {
+export async function getGitBranchName(dir?: string) {
   const { code, stdout, stderr } = await spawnPromise(
     'git',
     ['symbolic-ref', 'HEAD'],
-    { cwd: dir },
+    { cwd: dir ?? process.cwd() },
   );
 
   if (code === 0) {

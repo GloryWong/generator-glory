@@ -11,7 +11,7 @@
     "copyTpl": "copyfiles -u 1 'src/*/templates/**' generators",
     "lint": "eslint --ext \".js,.ts\" .",
     "fix": "npm run lint -- --fix",
-    "format": "prettier --write --ignore-path .gitignore .",
+    "pretty": "prettier --write --ignore-path .gitignore .",
     "test": "UNIT_TEST=true ts-mocha -p tsconfig.test.json tests/*.spec.ts",
     "prepare": "husky install",
     "prepublishOnly": "npm run build"

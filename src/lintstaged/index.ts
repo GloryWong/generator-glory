@@ -1,31 +1,24 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
-import { ESLINT_CONFIG, PRETTIER_CONFIG } from '../constants';
+import { ESLINT_CONFIG, LINTSTAGED_CONFIG } from '../_constants';
+import { isGitManaged } from '../_utils';
 
 export default class extends BaseGenerator {
   constructor(...params: ConstructorParameters<typeof Generator>) {
-    super(params[0], params[1], {
-      useYesOption: true,
-    });
+    super(...params);
   }
 
   configuring() {
-    this.renderTemplateJSON('lintstagedrc', '.lintstagedrc');
+    this.copyTemplate('lintstagedrc', LINTSTAGED_CONFIG);
   }
 
-  compose() {
-    if (!this.existsDestination('.gitignore')) {
-      this.composeWith(require.resolve('../git'), { yes: this.options.yes });
+  async compose() {
+    if (!(await isGitManaged(this.destinationRoot()))) {
+      this.composeWith(require.resolve('../git'), { yes: true });
     }
 
     if (!this.existsDestination(ESLINT_CONFIG)) {
-      this.composeWith(require.resolve('../eslint'), { yes: this.options.yes });
-    }
-
-    if (!this.existsDestination(PRETTIER_CONFIG)) {
-      this.composeWith(require.resolve('../prettier'), {
-        yes: this.options.yes,
-      });
+      this.composeWith(require.resolve('../eslint'), { yes: true });
     }
   }
 
@@ -37,12 +30,18 @@ export default class extends BaseGenerator {
   }
 
   end() {
-    this.spawnCommandSync('npm', ['run', 'prepare']);
-    this.spawnCommandSync('npx', [
-      'husky',
-      'set',
-      '.husky/pre-commit',
-      '"npx lint-staged"',
-    ]);
+    if (!this.options.skipInstall) {
+      this.spawnCommandSync('npm', ['run', 'prepare']);
+      this.spawnCommandSync('npx', [
+        'husky',
+        'set',
+        '.husky/pre-commit',
+        '"npx lint-staged"',
+      ]);
+    } else {
+      this.log(
+        'You should set lint-staged in husky manually: after install husky, run `npx husky set .husky/pre-commit "npx lint-staged"`',
+      );
+    }
   }
 }

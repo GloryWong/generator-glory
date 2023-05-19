@@ -30,6 +30,8 @@ describe('glory:eslint', () => {
     );
 
     assertPrettierBasic();
+    assertESLintBasic();
+    assertESLintPrettier();
   });
 
   describe('Update TypeScript part in ESLint config', () => {

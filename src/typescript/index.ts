@@ -3,7 +3,7 @@ import { BaseGenerator } from '../_base';
 import { TupleToUnion } from 'type-fest';
 import { appendTypeScript2ESLint } from '../_utils';
 import * as emptyDir from 'empty-dir';
-import { TYPESCRIPT_CONFIG, ESLINT_CONFIG, PACKAGE_JSON } from '../constants';
+import { TYPESCRIPT_CONFIG, ESLINT_CONFIG, PACKAGE_JSON } from '../_constants';
 
 const _module = ['CommonJS', 'ESNext'] as const;
 type Module = TupleToUnion<typeof _module>;

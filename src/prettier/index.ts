@@ -1,7 +1,7 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
 import { appendPrettier2ESLint } from '../_utils';
-import { ESLINT_CONFIG, PRETTIER_CONFIG } from '../constants';
+import { ESLINT_CONFIG, PRETTIER_CONFIG } from '../_constants';
 
 export default class extends BaseGenerator {
   constructor(...params: ConstructorParameters<typeof Generator>) {
@@ -14,7 +14,7 @@ export default class extends BaseGenerator {
 
   async writting() {
     this.addScripts({
-      format: 'prettier --write --ignore-path .gitignore .',
+      pretty: 'prettier --write --ignore-path .gitignore .',
     });
     await this.addPackages('prettier');
 

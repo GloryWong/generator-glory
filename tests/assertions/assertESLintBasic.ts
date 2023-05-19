@@ -1,5 +1,7 @@
 import * as assert from 'yeoman-assert';
-import { ESLINT_CONFIG, PACKAGE_JSON } from '../../src/constants';
+import { ESLINT_CONFIG } from '../../src/_constants';
+import { assertPkgScripts } from './assertPkgScripts';
+import { assertPkgDeps } from './assertPkgDeps';
 
 export function assertESLintBasic() {
   describe('ESlint basic configuration', () => {
@@ -7,13 +9,17 @@ export function assertESLintBasic() {
       assert.file([ESLINT_CONFIG, '.eslintignore']);
     });
 
-    it('should add required npm scripts', () => {
-      assert.fileContent(PACKAGE_JSON, '"lint"');
-      assert.fileContent(PACKAGE_JSON, '"fix"');
-    });
+    assertPkgScripts([
+      {
+        path: 'lint',
+        value: /eslint/,
+      },
+      {
+        path: 'fix',
+        value: /lint/,
+      },
+    ]);
 
-    it('should add required npm dependencies', () => {
-      assert.fileContent(PACKAGE_JSON, /"eslint":\s*".+"/);
-    });
+    assertPkgDeps('eslint');
   });
 }

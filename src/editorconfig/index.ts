@@ -1,6 +1,6 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
-import { EDITOR_CONFIG } from '../constants';
+import { EDITOR_CONFIG } from '../_constants';
 
 export default class extends BaseGenerator {
   constructor(...params: ConstructorParameters<typeof Generator>) {

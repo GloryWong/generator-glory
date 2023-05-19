@@ -4,7 +4,7 @@ import * as Generator from 'yeoman-generator';
 import * as EmailValidator from 'email-validator';
 import { BaseGenerator } from '../_base';
 import { getDefaultGithubRepoName, isScoped } from '../_utils';
-import { PACKAGE_JSON } from '../constants';
+import { PACKAGE_JSON } from '../_constants';
 
 const { slugify } = underscoreString;
 
