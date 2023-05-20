@@ -144,12 +144,12 @@ export abstract class BaseGenerator extends Generator {
   }
 
   renderTemplateJSON(
-    source: string,
-    destination: string,
+    sourceTmplPath: string,
+    destinationPath: string,
     templateData?: Record<any, any>,
     mergeDestinationJSONOptions?: MergeDestinationJSONOptions,
   ): void {
-    let templateStr = this.readTemplate(source);
+    let templateStr = this.readTemplate(sourceTmplPath);
 
     if (templateData) {
       templateStr = ejs.render(templateStr, templateData);
@@ -158,12 +158,14 @@ export abstract class BaseGenerator extends Generator {
     try {
       const templateJSON = JSON.parse(templateStr);
       this.mergeDestinationJSON(
-        destination,
+        destinationPath,
         templateJSON,
         mergeDestinationJSONOptions,
       );
     } catch (error) {
-      this.log('!template is not valid JSON or cannot rendered as JSON');
+      throw new Error(
+        `template ${sourceTmplPath} is not valid JSON or cannot rendered as JSON`,
+      );
     }
   }
 }

@@ -1,6 +1,11 @@
 import * as assert from 'yeoman-assert';
 import { readFileSync } from 'fs';
-import { has, get, isEqualWith as _isEqualWith, isPlainObject } from 'lodash';
+import {
+  has as _has,
+  get as _get,
+  isEqualWith as _isEqualWith,
+  isPlainObject,
+} from 'lodash';
 import { JsonValue } from 'type-fest';
 
 type PropertyPath = string; // eg.: 'a.b.c'
@@ -38,6 +43,20 @@ function formatForPrint(value: any) {
   return isPlainObject(value) ? JSON.stringify(value) : value;
 }
 
+function normalizePropertyPath(path: PropertyPath) {
+  return path.includes('\\.')
+    ? path.split(/(?<!\\)\./).map((v) => v.replace('\\.', '.'))
+    : path;
+}
+
+function has<T>(object: T, path: PropertyPath) {
+  return _has(object, normalizePropertyPath(path));
+}
+
+function get<T>(object: T, path: PropertyPath) {
+  return _get(object, normalizePropertyPath(path));
+}
+
 export function assertJsonFileContent(
   fileName: string,
   pathValues: PathValue | PathValue[],
@@ -55,7 +74,7 @@ export function assertJsonFileContent(
     if (typeof pathValue === 'string') {
       let path = completePath(pathValue);
       let expectExisting = true;
-      if (path.endsWith('!')) {
+      if (path.endsWith('!') && !path.endsWith('\\!')) {
         expectExisting = false;
         path = path.substring(0, path.length - 1);
       }

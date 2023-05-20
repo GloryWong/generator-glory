@@ -1,0 +1,6 @@
+{
+  <% if (extensionIds.length > 0) { %>
+    "recommendations": <%- JSON.stringify(extensionIds) %>,
+  <% } %>
+  "unwantedRecommendations": ["ms-vscode.vscode-typescript-tslint-plugin"]
+}
