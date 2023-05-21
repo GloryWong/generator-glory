@@ -1,5 +1,5 @@
-import * as assert from 'yeoman-assert';
 import { runGenerator } from './runGenerator';
+import { testLicenseBasic } from './cases';
 
 describe('glory:license', () => {
   describe('Use default values', () => {
@@ -11,8 +11,6 @@ describe('glory:license', () => {
       }),
     );
 
-    it('should create license file', () => {
-      assert.file('LICENSE');
-    });
+    testLicenseBasic();
   });
 });

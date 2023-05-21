@@ -1,8 +1,8 @@
 import { runGenerator } from './runGenerator';
-import { assertEditorConfigBasic } from './assertions';
+import { testEditorConfigBasic } from './cases';
 
 describe('glory:editorconfig', () => {
   before((done) => runGenerator(done, 'editorconfig'));
 
-  assertEditorConfigBasic();
+  testEditorConfigBasic();
 });

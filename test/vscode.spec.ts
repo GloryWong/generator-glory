@@ -1,12 +1,12 @@
 import { EXTENSION_IDS } from '../src/_constants';
-import {
-  assertESLintBasic,
-  assertEditorConfigBasic,
-  assertJsonFileContent,
-  assertPrettierBasic,
-  assertVSCodeBasic,
-} from './assertions';
+import { assertJsonFileContent } from './assertions';
 import { runGenerator } from './runGenerator';
+import {
+  testESLintBasic,
+  testEditorConfigBasic,
+  testPrettierBasic,
+  testVSCodeBasic,
+} from './cases';
 
 describe('glory:vscode', () => {
   describe('Use default values', () => {
@@ -16,12 +16,12 @@ describe('glory:vscode', () => {
       }),
     );
 
-    assertVSCodeBasic();
+    testVSCodeBasic();
 
     describe('Setup default formatters', () => {
-      assertEditorConfigBasic();
-      assertESLintBasic();
-      assertPrettierBasic();
+      testEditorConfigBasic();
+      testESLintBasic();
+      testPrettierBasic();
     });
 
     it('should add recommended extensions', () => {
@@ -46,17 +46,18 @@ describe('glory:vscode', () => {
     before((done) =>
       runGenerator(done, 'vscode', {
         answers: {
-          formatters: ['editorconfig'],
+          formatters: ['editorconfig', 'eslint'],
           extensionIds: EXTENSION_IDS.prettier,
           prettierAsDefaultFormatter: false,
         },
       }),
     );
 
-    assertVSCodeBasic();
+    testVSCodeBasic();
 
     describe('Setup chosen formatters', () => {
-      assertEditorConfigBasic();
+      testEditorConfigBasic();
+      testESLintBasic();
     });
 
     it('should add recommended extensions', () => {

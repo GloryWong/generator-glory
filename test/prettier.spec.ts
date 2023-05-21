@@ -1,5 +1,5 @@
-import { assertESLintPrettier, assertPrettierBasic } from './assertions';
 import { runGenerator } from './runGenerator';
+import { testESLintPrettierIntegrate, testPrettierBasic } from './cases';
 
 describe('glory:prettier', () => {
   describe('Prettier basic', () => {
@@ -11,7 +11,7 @@ describe('glory:prettier', () => {
       }),
     );
 
-    assertPrettierBasic();
+    testPrettierBasic();
   });
 
   describe('Update prettier part in ESlint config', () => {
@@ -22,6 +22,6 @@ describe('glory:prettier', () => {
       });
     });
 
-    assertESLintPrettier();
+    testESLintPrettierIntegrate();
   });
 });

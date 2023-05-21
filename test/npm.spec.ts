@@ -1,7 +1,7 @@
-import * as assert from 'yeoman-assert';
 import { PACKAGE_JSON } from '../src/_constants';
-import { assertJsonFileContent, assertNpmBasic } from './assertions';
+import { assertJsonFileContent } from './assertions';
 import { runGenerator } from './runGenerator';
+import { testNPMBasic } from './cases/testNPMBasic';
 
 interface MockedAnswers {
   moduleName: string;
@@ -38,9 +38,7 @@ function makeGithubUserRepoPart({
 function assertPackageJson(mockedAnswers: MockedAnswers) {
   const githubUserRepoPart = makeGithubUserRepoPart(mockedAnswers);
 
-  it('should create package.json file', () => {
-    assert.file(PACKAGE_JSON);
-  });
+  testNPMBasic();
 
   it('should add required properties and values in package.json file', () => {
     assertJsonFileContent(PACKAGE_JSON, [
@@ -85,7 +83,7 @@ describe('glory:npm', () => {
       });
     });
 
-    assertNpmBasic();
+    testNPMBasic();
   });
 
   describe('Prompt to customize values', () => {

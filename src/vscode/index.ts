@@ -1,9 +1,12 @@
 import * as Generator from 'yeoman-generator';
 import { BaseGenerator } from '../_base';
 import { EXTENSION_IDS } from '../_constants';
+import { TupleToUnion } from 'type-fest';
+
+const formatters = ['editorconfig', 'eslint', 'prettier'] as const;
 
 interface Value {
-  formatters: string[];
+  formatters: TupleToUnion<typeof formatters>[];
   extensions: {
     name: string;
     value: string;

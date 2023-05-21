@@ -6,9 +6,9 @@ import { assertJsonFileContent } from './assertJsonFileContent';
  * @param dev whether they are development dependencies or not. Default: `true`
  */
 export function assertPkgDeps(depNames: string | string[], dev = true) {
-  const namespace = `${dev ? 'devD' : 'd'}ependencies`;
-
-  it(`should add required npm ${namespace}`, () => {
-    assertJsonFileContent(PACKAGE_JSON, depNames, namespace);
-  });
+  assertJsonFileContent(
+    PACKAGE_JSON,
+    depNames,
+    `${dev ? 'devD' : 'd'}ependencies`,
+  );
 }

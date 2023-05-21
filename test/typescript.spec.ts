@@ -1,10 +1,7 @@
 import { TYPESCRIPT_CONFIG } from '../src/_constants';
-import {
-  assertESLintTypeScript,
-  assertJsonFileContent,
-  assertTypeScriptBasic,
-} from './assertions';
+import { assertJsonFileContent } from './assertions';
 import { runGenerator } from './runGenerator';
+import { testESLintTypeScriptIntegrate, testTypeScriptBasic } from './cases';
 
 describe('glory:typescript', () => {
   describe('Use default values', () => {
@@ -14,7 +11,7 @@ describe('glory:typescript', () => {
       }),
     );
 
-    assertTypeScriptBasic();
+    testTypeScriptBasic();
   });
 
   describe('Prompt to customize values', () => {
@@ -67,6 +64,6 @@ describe('glory:typescript', () => {
       });
     });
 
-    assertESLintTypeScript();
+    testESLintTypeScriptIntegrate();
   });
 });

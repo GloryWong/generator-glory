@@ -1,10 +1,10 @@
-import { runGenerator } from './runGenerator';
 import {
-  assertESLintBasic,
-  assertESLintPrettier,
-  assertESLintTypeScript,
-  assertPrettierBasic,
-} from './assertions';
+  testESLintBasic,
+  testPrettierBasic,
+  testESLintPrettierIntegrate,
+  testESLintTypeScriptIntegrate,
+} from './cases';
+import { runGenerator } from './runGenerator';
 
 describe('glory:eslint', () => {
   describe('Use default values', () => {
@@ -16,7 +16,7 @@ describe('glory:eslint', () => {
       }),
     );
 
-    assertESLintBasic();
+    testESLintBasic();
   });
 
   describe('Integrate prettier', () => {
@@ -29,9 +29,9 @@ describe('glory:eslint', () => {
       }),
     );
 
-    assertPrettierBasic();
-    assertESLintBasic();
-    assertESLintPrettier();
+    testESLintBasic();
+    testPrettierBasic();
+    testESLintPrettierIntegrate();
   });
 
   describe('Update TypeScript part in ESLint config', () => {
@@ -42,8 +42,8 @@ describe('glory:eslint', () => {
       });
     });
 
-    assertESLintBasic();
-    assertESLintTypeScript();
+    testESLintBasic();
+    testESLintTypeScriptIntegrate();
   });
 
   describe('Update Prettier part in ESLint config', () => {
@@ -54,8 +54,8 @@ describe('glory:eslint', () => {
       });
     });
 
-    assertESLintBasic();
-    assertESLintPrettier();
+    testESLintBasic();
+    testESLintPrettierIntegrate();
   });
 
   describe('Update TypeScript and Prettier at the same time in ESLint config', () => {
@@ -72,8 +72,8 @@ describe('glory:eslint', () => {
       });
     });
 
-    assertESLintBasic();
-    assertESLintTypeScript();
-    assertESLintPrettier();
+    testESLintBasic();
+    testESLintTypeScriptIntegrate();
+    testESLintPrettierIntegrate();
   });
 });

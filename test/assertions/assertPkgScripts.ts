@@ -9,7 +9,5 @@ type Script =
     };
 
 export function assertPkgScripts(scripts: Script | Script[]) {
-  it('should add required npm scripts', () => {
-    assertJsonFileContent(PACKAGE_JSON, scripts, 'scripts');
-  });
+  assertJsonFileContent(PACKAGE_JSON, scripts, 'scripts');
 }

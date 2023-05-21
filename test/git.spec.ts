@@ -1,7 +1,7 @@
 import * as assert from 'yeoman-assert';
 import { runGenerator } from './runGenerator';
 import { getGitBranchName } from '../src/_utils';
-import { assertGitBasic } from './assertions';
+import { testGitBasic } from './cases';
 
 describe('glory:git', () => {
   describe('Use default values', () => {
@@ -13,7 +13,7 @@ describe('glory:git', () => {
       }),
     );
 
-    assertGitBasic();
+    testGitBasic();
   });
 
   describe('Prompt to customize initialBranch', () => {
