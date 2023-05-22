@@ -2,7 +2,11 @@ import * as Generator from 'yeoman-generator';
 import { JsonObject, JsonValue, Primitive } from 'type-fest';
 import { mergeWith, uniq, PropertyPath, pull, get, has } from 'lodash';
 import * as ejs from 'ejs';
-import { getLatestVersions } from '../_utils';
+import {
+  getLatestVersions,
+  isGitDirCleanSync,
+  isGitManagedSync,
+} from '../_utils';
 import { Spinner } from 'cli-spinner';
 
 type GCP = ConstructorParameters<typeof Generator>;
@@ -27,6 +31,12 @@ spinner.setSpinnerString(19).setSpinnerTitle('Adding dependencies... ');
 export abstract class BaseGenerator extends Generator {
   constructor(args: Args, options: Options, features?: Features) {
     super(args, options, features);
+
+    if (isGitManagedSync() && !isGitDirCleanSync()) {
+      throw new Error(
+        'There are un-committed changes in the current directory.',
+      );
+    }
 
     if (features?.useYesOption) {
       this.option('yes', {

@@ -1,4 +1,3 @@
-// import { spawn } from 'child_process';
 import { spawnPromise } from './spawnPromise';
 
 export async function isGitManaged(dir?: string) {
