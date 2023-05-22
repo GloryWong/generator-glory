@@ -80,7 +80,7 @@ export default class extends BaseGenerator {
       !this.existsDestination(this.value.include) ||
       (await emptyDir(this.destinationPath(this.value.include)))
     ) {
-      this.renderTemplate('index', `${this.value.include}/index.ts`);
+      this.copyTemplate('index', `${this.value.include}/index.ts`);
     }
   }
 

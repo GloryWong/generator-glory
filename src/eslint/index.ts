@@ -44,7 +44,7 @@ export default class extends BaseGenerator {
       this.composeWith(require.resolve('../prettier'));
     }
 
-    this.copyTemplate('eslintrc', ESLINT_CONFIG);
+    this.renderTemplateJSON('eslintrc', ESLINT_CONFIG);
     this.copyTemplate('eslintignore', '.eslintignore');
   }
 

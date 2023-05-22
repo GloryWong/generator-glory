@@ -9,7 +9,7 @@ export default class extends BaseGenerator {
   }
 
   configuring() {
-    this.copyTemplate('prettierrc', PRETTIER_CONFIG);
+    this.renderTemplateJSON('prettierrc', PRETTIER_CONFIG);
   }
 
   async writting() {

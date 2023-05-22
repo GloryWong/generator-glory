@@ -9,7 +9,7 @@ export default class extends BaseGenerator {
   }
 
   configuring() {
-    this.copyTemplate('lintstagedrc', LINTSTAGED_CONFIG);
+    this.renderTemplateJSON('lintstagedrc', LINTSTAGED_CONFIG);
   }
 
   async _compose() {
