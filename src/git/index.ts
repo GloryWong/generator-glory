@@ -45,10 +45,10 @@ export default class extends BaseGenerator {
     this.copyTemplate('gitignore', '.gitignore');
   }
 
-  writing() {
+  async writing() {
     // Git init
     if (!this.gitManaged) {
-      this.spawnCommandSync('git', [
+      await this.spawnCommand('git', [
         'init',
         '--quiet',
         '-b',

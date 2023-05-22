@@ -32,14 +32,13 @@ export default class extends BaseGenerator {
   constructor(...params: ConstructorParameters<typeof Generator>) {
     super(params[0], params[1], { useYesOption: true });
 
-    const empty = emptyDir.sync('./');
+    const empty = emptyDir.sync(this.destinationRoot());
     if (!empty) {
-      this.log('Current directory is not empty.');
-      process.exit(1);
+      throw new Error('Current directory is not empty.');
     }
   }
 
-  initializing() {
+  async initializing() {
     Object.assign(this.value, this.options);
   }
 
@@ -141,14 +140,12 @@ export default class extends BaseGenerator {
       ._composeWith('prettier')
       ._composeWith('editorconfig')
       ._composeWith('license', {
-        yes: true,
         name: this.value.authorName,
         email: this.value.authorEmail,
         website: this.value.authorWebsite,
         license: 'MIT',
       })
       ._composeWith('readme', {
-        yes: true,
         projectName: this.value.appName,
         projectDescription: this.value.appDescription,
         licenseName: 'MIT',

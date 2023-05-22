@@ -12,7 +12,7 @@ export default class extends BaseGenerator {
     this.copyTemplate('lintstagedrc', LINTSTAGED_CONFIG);
   }
 
-  async compose() {
+  async _compose() {
     if (!(await isGitManaged(this.destinationRoot()))) {
       this.composeWith(require.resolve('../git'), { yes: true });
     }
@@ -23,16 +23,17 @@ export default class extends BaseGenerator {
   }
 
   async writing() {
+    await this._compose();
     this.addScripts({
       prepare: 'husky install',
     });
     await this.addPackages(['lint-staged', 'husky']);
   }
 
-  end() {
+  async end() {
     if (!this.options.skipInstall) {
-      this.spawnCommandSync('npm', ['run', 'prepare']);
-      this.spawnCommandSync('npx', [
+      await this.spawnCommand('npm', ['run', 'prepare']);
+      await this.spawnCommand('npx', [
         'husky',
         'set',
         '.husky/pre-commit',
