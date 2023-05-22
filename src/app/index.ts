@@ -4,7 +4,6 @@ import * as EmailValidator from 'email-validator';
 import { BaseGenerator } from '../_base';
 import * as Generator from 'yeoman-generator';
 import normalizeUrl from '@esm2cjs/normalize-url';
-import * as emptyDir from 'empty-dir';
 
 interface Value {
   appName: string;
@@ -32,10 +31,10 @@ export default class extends BaseGenerator {
   constructor(...params: ConstructorParameters<typeof Generator>) {
     super(params[0], params[1], { useYesOption: true });
 
-    const empty = emptyDir.sync(this.destinationRoot());
-    if (!empty) {
-      throw new Error('Current directory is not empty.');
-    }
+    // const empty = emptyDir.sync(this.destinationRoot());
+    // if (!empty) {
+    //   throw new Error('Current directory is not empty.');
+    // }
   }
 
   async initializing() {

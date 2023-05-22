@@ -8,7 +8,42 @@
   </a>
 </p>
 
-> Glory project scaffold
+All-in-one [yeoman](https://yeoman.io/) generator for TypeScript or JavaScript project.
+
+> Support below tool configurings on hand:
+>
+> * Code formatters: `editorconfig`, `eslint`, `prettier`
+> * Version Control: `git`
+> * Package Mangager: `npm`
+> * `typescript`
+> * VSCode configs: `vscode`
+> * Docs: `readme`, `license`
+> * `lintstaged`
+
+## Installation
+
+Yeoman yo must be installed as it's requisite for yeoman generators
+
+```bash
+npm install --global yo
+```
+
+Install the generator
+
+```bash
+npm install --global generator-glory
+```
+
+## Usage
+
+```bash
+# for creating a new project
+yo glory
+
+# for appending new individul configuritions or updating existing configurations. Take `eslint` for example
+yo glory:eslint
+
+```
 
 ## Author
 
