@@ -22,13 +22,13 @@ All-in-one [yeoman](https://yeoman.io/) generator for TypeScript or JavaScript p
 
 ## Installation
 
-Yeoman yo must be installed as it's requisite for yeoman generators
+Yeoman yo must be installed as it's requisite for running yeoman generators
 
 ```bash
 npm install --global yo
 ```
 
-Install the generator
+Install this generator
 
 ```bash
 npm install --global generator-glory
