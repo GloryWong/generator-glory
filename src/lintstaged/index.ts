@@ -37,7 +37,7 @@ export default class extends BaseGenerator {
         'husky',
         'set',
         '.husky/pre-commit',
-        '"npx lint-staged"',
+        'npx lint-staged',
       ]);
     } else {
       this.log(

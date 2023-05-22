@@ -19,7 +19,7 @@ export default class extends BaseGenerator {
 
   async initializing() {
     Object.assign(this.value, this.options);
-    this.gitManaged = await isGitManaged(this.destinationRoot());
+    this.gitManaged = await isGitManaged();
 
     if (this.gitManaged) {
       this.log('!Current directory is already managed by git');

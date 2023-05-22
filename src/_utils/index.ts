@@ -8,3 +8,5 @@ export * from './isGitManagedSync';
 export * from './getGitBranchName';
 export * from './isGitDirClean';
 export * from './isGitDirCleanSync';
+export * from './isGitInstalled';
+export * from './isGitInstalledSync';

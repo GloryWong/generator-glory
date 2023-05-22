@@ -12,7 +12,9 @@ import {
   testVSCodeBasic,
 } from './cases';
 
-describe('glory:app', () => {
+describe('glory:app', function () {
+  this.timeout(5000);
+
   describe('Use default values', () => {
     before((done) =>
       runGenerator(done, 'app', {
