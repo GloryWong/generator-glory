@@ -6,7 +6,7 @@
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/github/license/GloryWong/generator-glory" />
   </a>
-  <a href="#" target="_blank">
+  <a href="https://app.codecov.io/gh/GloryWong/generator-glory" target="_blank">
     <img alt="Coverage" src="https://img.shields.io/codecov/c/github/GloryWong/generator-glory" />
   </a>
 </p>
