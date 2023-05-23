@@ -15,7 +15,7 @@ jobs:
           node-version: '19.x'
       - name: Install Dependencies
         run: npm install
-      - name: Run Tests
-        run: npm test
+      - name: Run cover
+        run: npm cover
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
