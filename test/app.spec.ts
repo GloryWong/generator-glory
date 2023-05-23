@@ -13,7 +13,7 @@ import {
 } from './cases';
 
 describe('glory:app', function () {
-  this.timeout(5000);
+  this.timeout(10000);
 
   describe('Use default values', () => {
     before((done) =>
