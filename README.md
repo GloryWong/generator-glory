@@ -9,6 +9,9 @@
   <a href="https://app.codecov.io/gh/GloryWong/generator-glory" target="_blank">
     <img alt="Coverage" src="https://img.shields.io/codecov/c/github/GloryWong/generator-glory" />
   </a>
+  <a href="#" target="_blank">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/GloryWong/generator-glory" />
+  </a>
 </p>
 
 All-in-one [yeoman](https://yeoman.io/) generator for TypeScript or JavaScript project.
