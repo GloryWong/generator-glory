@@ -15,7 +15,7 @@
     "test": "UNIT_TEST=true ts-mocha -p tsconfig.test.json test/*.spec.ts",
     "cover": "nyc npm test",
     "prepare": "husky install",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
