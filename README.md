@@ -6,6 +6,9 @@
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/github/license/GloryWong/generator-glory" />
   </a>
+  <a href="#" target="_blank">
+    <img alt="Coverage" src="https://img.shields.io/codecov/c/github/GloryWong/generator-glory" />
+  </a>
 </p>
 
 All-in-one [yeoman](https://yeoman.io/) generator for TypeScript or JavaScript project.
